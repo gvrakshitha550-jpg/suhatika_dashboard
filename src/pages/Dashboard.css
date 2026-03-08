@@ -234,6 +234,7 @@
 
 .table-wrap {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--surface);
@@ -342,4 +343,261 @@
 .products-table td,
 .orders-table td {
   vertical-align: middle;
+}
+
+/* ----- Mobile menu toggle (visible on small screens only) ----- */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.sidebar-toggle:hover {
+  background: var(--surface2);
+  border-color: var(--accent);
+}
+
+.hamburger-line {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 1px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+/* ----- Responsive: tablet and below ----- */
+@media (max-width: 992px) {
+  .main-content {
+    padding: 1rem;
+  }
+
+  .summary-cards {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .summary-card {
+    padding: 1rem;
+  }
+
+  .summary-value {
+    font-size: 1.5rem;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .top-bar {
+    padding: 0.75rem 1rem;
+  }
+
+  .top-title {
+    font-size: 1.1rem;
+  }
+
+  .logged-in {
+    font-size: 0.8rem;
+  }
+}
+
+/* ----- Responsive: mobile (sidebar becomes overlay) ----- */
+@media (max-width: 768px) {
+  .sidebar-toggle {
+    display: flex;
+  }
+
+  .sidebar-overlay {
+    display: block;
+  }
+
+  .dashboard.sidebar-open .sidebar-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 85vw;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: none;
+  }
+
+  .dashboard.sidebar-open .sidebar {
+    transform: translateX(0);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .main-area {
+    margin-left: 0;
+  }
+
+  .top-bar {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-left: 3.5rem;
+    padding-right: 0.75rem;
+  }
+
+  .top-title {
+    font-size: 1rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .top-actions {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .logged-in {
+    display: none;
+  }
+
+  .main-content {
+    padding: 0.75rem;
+  }
+
+  .page-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .table-wrap {
+    margin: 0 -0.75rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .data-table {
+    font-size: 0.8rem;
+  }
+
+  /* Prevent table from shrinking so columns don't overlap; container scrolls instead */
+  .orders-table {
+    min-width: 980px;
+  }
+
+  .data-table.products-table {
+    min-width: 420px;
+  }
+
+  .data-table:not(.orders-table):not(.products-table) {
+    min-width: 520px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 0.5rem 0.6rem;
+  }
+
+  .data-table th:first-child,
+  .data-table td:first-child {
+    padding-left: 1rem;
+  }
+
+  .data-table th:last-child,
+  .data-table td:last-child {
+    padding-right: 1rem;
+  }
+
+  /* Allow long content to wrap so columns don't overlap if table is wide enough */
+  .items-cell,
+  .address-cell {
+    min-width: 120px;
+    max-width: 200px;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .orders-table .uid-cell {
+    white-space: nowrap;
+  }
+
+  .product-thumb {
+    width: 36px;
+    height: 36px;
+  }
+
+  .user-label {
+    max-width: 120px;
+  }
+}
+
+/* ----- Small phones ----- */
+@media (max-width: 480px) {
+  .sidebar-toggle {
+    top: 0.75rem;
+    left: 0.75rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .hamburger-line {
+    width: 18px;
+  }
+
+  .top-bar {
+    padding-left: 3.25rem;
+  }
+
+  .top-title {
+    font-size: 0.95rem;
+  }
+
+  .btn-refresh {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .summary-value {
+    font-size: 1.35rem;
+  }
+
+  .sidebar {
+    width: 260px;
+    max-width: 90vw;
+  }
 }

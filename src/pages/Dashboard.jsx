@@ -376,6 +376,7 @@ function CartsList({ productsData }) {
 
 export default function Dashboard() {
   const [view, setView] = useState('overview')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const { user } = useAuth()
   const customersData = useRealtime('customers').data
   const productsData = useRealtime('products').data
@@ -396,8 +397,24 @@ export default function Dashboard() {
     { id: 'carts', label: 'Orders' },
   ]
 
+  const handleNavClick = (id) => {
+    setView(id)
+    setSidebarOpen(false)
+  }
+
   return (
-    <div className="dashboard">
+    <div className={`dashboard ${sidebarOpen ? 'sidebar-open' : ''}`}>
+      <button
+        type="button"
+        className="sidebar-toggle"
+        onClick={() => setSidebarOpen((o) => !o)}
+        aria-label={sidebarOpen ? 'Close menu' : 'Open menu'}
+      >
+        <span className="hamburger-line" />
+        <span className="hamburger-line" />
+        <span className="hamburger-line" />
+      </button>
+      <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} aria-hidden="true" />
       <aside className="sidebar">
         <div className="sidebar-header">
           <div className="avatar">SS</div>
@@ -410,7 +427,7 @@ export default function Dashboard() {
               key={item.id}
               type="button"
               className={`nav-item ${view === item.id ? 'active' : ''}`}
-              onClick={() => setView(item.id)}
+              onClick={() => handleNavClick(item.id)}
             >
               {item.label}
             </button>
