@@ -301,6 +301,7 @@ function CartsList({ productsData }) {
           <table className="data-table orders-table">
             <thead>
               <tr>
+                <th>Order ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Phone</th>
@@ -344,6 +345,7 @@ function CartsList({ productsData }) {
 
                 return (
                   <tr key={row.id}>
+                    <td><code className="uid-cell">{row.id}</code></td>
                     <td>{firstName}</td>
                     <td>{lastName}</td>
                     <td>{phone}</td>
